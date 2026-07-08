@@ -1,0 +1,12 @@
+[submodule "android/Installer"]
+	path = android/Installer
+	url = https://github.com/KopsourcesORG/KosminorKernelInstaller.git
+	branch = alioth
+[submodule "KernelSU"]
+	path = KernelSU
+	url = https://github.com/backslashxx/KernelSU.git
+	branch = master
+[submodule "Baseband-guard"]
+	path = Baseband-guard
+	url = https://github.com/vc-teahouse/Baseband-guard.git
+	branch = main

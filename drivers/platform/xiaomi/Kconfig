@@ -1,0 +1,24 @@
+# Xiaomi configuration options
+
+config MACH_XIAOMI
+	bool "Xiaomi device"
+	depends on ARCH_QCOM
+	help
+	  Support for Xiaomi products
+
+config MACH_XIAOMI_SM8250
+	bool "Xiaomi SM8250"
+	depends on ARCH_QCOM
+	select MACH_XIAOMI
+	help
+	  Support for Xiaomi SM8250 devices
+
+menu "Xiaomi board selection"
+
+	config MACH_XIAOMI_ALIOTH
+		bool "Xiaomi alioth board"
+		select MACH_XIAOMI_SM8250
+		help
+		  Support for Redmi K40 / POCO F3 / Mi 11X
+
+endmenu
