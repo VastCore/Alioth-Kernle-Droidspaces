@@ -34,13 +34,19 @@ jobs:
       - name: Install dependencies
         run: sudo apt update && sudo apt install zstd git -y
 
-      - name: Clone Neutron Clang 19.0.0-stable
+      - name: Install required packages
+        run: sudo apt update && sudo apt install zstd git -y
+
+      - name: Download Neutron Clang 10032024
         run: |
-          mkdir -p toolchain
-          cd toolchain
-          git clone --depth=1 --branch=clang-19.0.0-stable https://github.com/Neutron-Toolchains/clang-build-catalogue.git llvm
-          cd $GITHUB_WORKSPACE
-          git clone --depth=1 https://github.com/VastCore/alioth-python-2.7.18-prebuilt.git toolchain/python2
+         mkdir -p toolchain
+         cd toolchain
+         curl -L --retry 4 --connect-timeout 120 --ipv4 https://mirror.ghproxy.com/https://github.com/Neutron-Toolchains/clang-build-catalogue/releases/download/10032024/neutron-clang-10032024.tar.zst -o neutron-clang.tar.zst
+         mkdir llvm
+         tar -I zstd -xvf neutron-clang.tar.zst -C llvm
+         rm neutron-clang.tar.zst
+         cd $GITHUB_WORKSPACE
+         git clone --depth=1 --timeout=120 https://github.com/VastCore/alioth-python-2.7.18-prebuilt.git toolchain/python2
 
       - name: Processing submodules
         run: |
