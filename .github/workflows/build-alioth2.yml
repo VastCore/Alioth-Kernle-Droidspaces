@@ -28,10 +28,19 @@ jobs:
           ref: hyper-2
           fetch-depth: 1
 
-      - name: Get Toolchain
+      - name: Install zstd decompress dependency
+        run: sudo apt update && sudo apt install zstd -y
+
+      - name: Download & Install Neutron Clang 19.0.0-stable (10032024)
         run: |
-          git clone https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git --depth 1 toolchain/llvm
-          git clone https://github.com/VastCore/alioth-python-2.7.18-prebuilt.git --depth=1 toolchain/python2
+          mkdir -p toolchain
+          cd toolchain
+          wget --timeout=60 https://github.com/Neutron-Toolchains/clang-build-catalogue/releases/download/10032024/neutron-clang-10032024.tar.zst
+          mkdir llvm
+          tar -I zstd -xvf neutron-clang-10032024.tar.zst -C llvm
+          rm neutron-clang-10032024.tar.zst
+          cd $GITHUB_WORKSPACE
+          git clone --depth=1 --timeout=60 https://github.com/VastCore/alioth-python-2.7.18-prebuilt.git toolchain/python2
 
       - name: Processing submodules
         run: |
