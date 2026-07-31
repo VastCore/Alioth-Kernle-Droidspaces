@@ -51,78 +51,22 @@ Debian 13、Ubuntu、Alpine、Fedora等标准glibc发行版（Termux仅Bionic li
  
 - GPU硬件加速：VirGL、dma_heap设备挂载，可跑XFCE/KDE桌面
 - 音频转发：PulseAudio直通容器，容器内播放声音、麦克风可用
-- 配合Termux-X11实现完整Linux图形桌面输出到手机屏幕
- 
-4. 底层技术优势
- 
-- 静态musl编译单文件，无需额外依赖，可在安卓Rec、ramdisk中直接运行
-- 自动处理安卓特有问题：SELinux冲突、加密分区、内核兼容性补丁、安卓特殊权限限制
-- 兼容KernelSU/Magisk root，自动适配主流定制内核
- 
-三、运行前置硬性要求（门槛较高）
- 
-1. 设备必须解锁BL（Bootloader）
-小米、一加、高通机型相对友好；大部分国产锁BL机型无法使用。
-2. 内核支持全套Linux Namespace
-要求内核开启：UTS、PID、mount、IPC、user、cgroup、net namespace；
-内核版本最低3.18，推荐5.15/6.x新版内核；原厂内核大多缺失，需刷社区修补内核或自行编译打补丁。
-3. 完整Root权限
-KernelSU / Magisk，普通免root方案无法运行（底层容器需要内核权限）。
-4. 芯片适配现状
-- 高通骁龙：社区完善，大量预编译内核，稳定性最好
-- 天玑联发科：兼容性差，GPU加速难，仅命令行服务器可用，桌面极易崩溃
-- 三星、华为锁BL机型基本不可用
- 
-四、适用场景
- 
-1. 手机便携Linux服务器
-搭建SSH、Web服务、数据库、Python/Go开发环境、Docker（容器套容器）。
-2. 完整Linux桌面环境
-搭配Termux-X11运行XFCE桌面，手机变迷你笔记本，编译代码、办公。
-3. 开发测试
-隔离环境编译程序、测试服务，不污染安卓主机系统。
-4. 离线工具环境
-离线爬虫、AI推理、脚本自动化，脱离电脑随时使用。
- 
-五、对比同类安卓Linux方案
- 
-方案 隔离强度 Systemd支持 性能 使用门槛 
-Droidspaces 高（完整Namespace） ✅完美支持 原生零损耗 高（解锁BL+定制内核+root） 
-普通chroot 极低 ❌基本失效 良好 中（仅root） 
-Termux 无隔离（Bionic libc） ❌不支持 良好，但软件兼容差 极低（无需root） 
-LXC安卓版 中 支持 良好 极高（官方停止维护，配置复杂） 
-QEMU虚拟机 完全隔离 ✅ 损耗大 中（无需解锁BL） 
- 
-六、优缺点总结
- 
-优点
- 
-1. 唯一安卓端低成本实现标准systemd完整Linux的容器方案
-2. 内核级强隔离，安全性远高于chroot、Termux
-3. 无虚拟化开销，CPU/内存性能拉满，远超虚拟机
-4. 可视化GUI，新手友好，不用记忆大量LXC命令
-5. 完善图形、音频、GPU硬件加速生态
-6. 轻量单二进制，可在Recovery环境运行
- 
-缺点
- 
-1. 使用门槛极高：必须解锁BL+修补内核+root，原厂系统基本无法直接用
-2. 联发科芯片适配差，桌面环境容易死机重启
-3. 部分厂商GKI内核存在兼容性bug（一加、小米部分机型偶发重启）
-4. 不能免root，普通用户无法体验
-5. 图形桌面配置步骤繁琐，踩坑点多
- 
-七、版本与开源信息
- 
-- 开源仓库：GitHub ravindu644/Droidspaces-OSS
-- 当前稳定版：v6.4.0（2026年更新），新增统一图形音频配置文档、中文翻译、远程WebUI优化、防休眠适配
-- 授权：开源自由使用，社区提供适配内核、镜像、图文教程（酷安、技术博客为主）
- 
-八、与Termux核心区别（容易混淆）
- 
-1. Libc底层：Termux用安卓Bionic，大量标准Linux软件编译失败；Droidspaces容器内是标准glibc，Debian/Ubuntu软件源全部兼容。
-2. 系统服务：Termux无systemd，无法管理后台常驻服务；Droidspaces原生支持完整systemd服务栈。
-3. 隔离：Termux和安卓共享进程空间；Droidspaces容器进程完全隔离，互不干扰。
-4. 图形：Termux图形依赖第三方补丁；Droidspaces原生支持GPU直通、X11桌面。
----
-> 该内核基于 github@liyafe1997/kernel_xiaomi_sm8250_mod 修改
+- 配合Termux-X11实现完整Linux图形桌面输出到手机屏Linux kernel
+============
+
+There are several guides for kernel developers and users. These guides can
+be rendered in a number of formats, like HTML and PDF. Please read
+Documentation/admin-guide/README.rst first.
+
+In order to build the documentation, use ``make htmldocs`` or
+``make pdfdocs``.  The formatted documentation can also be read online at:
+
+    https://www.kernel.org/doc/html/latest/
+
+There are various text files in the Documentation/ subdirectory,
+several of them using the Restructured Text markup notation.
+See Documentation/00-INDEX for a list of what is contained in each file.
+
+Please read the Documentation/process/changes.rst file, as it contains the
+requirements for building and running the kernel, and information about
+the problems which may result by upgrading your kernel.
